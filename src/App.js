@@ -37,7 +37,7 @@ class App extends Component {
 	    // "withCredentials" only exists on XMLHTTPRequest2 objects.
 	    xhr.open(method, url, true);
 
-	  } else if (typeof XDomainRequest != "undefined") {
+	  } else if (typeof XDomainRequest !== "undefined") {
 
 	    // Otherwise, check if XDomainRequest.
 	    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
