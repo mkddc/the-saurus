@@ -25,7 +25,7 @@ class App extends Component {
 		// Choix d'un mot au hasard, en arrivant sur la page :
 		// var randomWord = wordListArray[Math.floor(Math.random() * wordListArray.length)];
 
-		var urlDef = "http://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + this.state.wordInput + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
+		var urlDef = "https://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + this.state.wordInput + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
 
 		this.checkForMatch(urlDef, this.state.wordInput);
 	}

@@ -111,7 +111,7 @@ export class Search extends Component {
 		}
 		
 		// Constitution de l'url de recherche pour le thesaurus :
-		var urlRequest = "http://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + searchRequest + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
+		var urlRequest = "https://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + searchRequest + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
 
 		// Au clic sur le bouton, on fait disparaître la suggestionBox
 		this.setState({
