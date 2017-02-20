@@ -60,7 +60,6 @@ class App extends Component {
 		if (!reqDef) {
 		  throw new Error('CORS not supported');
 		}		
-		reqDef.withCredentials = true;
 
 		reqDef.overrideMimeType('text/xml');
 		reqDef.open('GET', urlDef, true); // Si true : asynchrone
