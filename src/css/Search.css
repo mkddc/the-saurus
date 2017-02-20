@@ -1,0 +1,57 @@
+#searchForm{
+	width: 100%;
+  	background: #2d5f7c;
+  	height: 10rem;
+  	text-align: center;
+}
+	#logoImg{
+		line-height: 10rem;
+		position: relative;
+		right: 18%;
+	}
+	#searchInpt{
+		height: 3.4rem;
+		width: 30%;
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%,0);
+		top: 3.3rem;
+	}
+	#searchBtn{
+		position: relative;
+		left: 15%;
+	}
+
+.suggestionBoxOpen{
+	z-index: 1000;
+	display: block;
+	width: 30%;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%,0);
+	top: 7.3rem;
+}
+
+.suggestionBoxClosed{
+	display: none;
+}
+
+@media (max-width: 415px) {
+	#logoImg{
+		position: relative;
+		right: 24.5%;
+	}
+	#searchInpt{
+		height: 3.4rem;
+		width: 45%;
+		top: 3.3rem;
+	}
+	#searchBtn{
+		position: relative;
+		left: 21%;
+	}
+	.suggestionBoxOpen{
+		width: 45%;
+		top: 7.3rem;
+	}
+}

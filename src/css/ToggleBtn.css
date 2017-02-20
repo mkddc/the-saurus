@@ -1,0 +1,41 @@
+.toggleBtn{
+	padding: 0;
+	margin-top: .5rem;
+	margin-right: 1rem;
+	border: none;
+	display: block;
+	transform: rotate(-360deg);
+    transition: 400ms transform;
+}
+
+.toggleBtn.collapsed {
+    animation: spin 150ms;
+    transform: rotate(180deg);
+}
+
+.toggleBtn:selected {
+	background: #eee;
+}
+
+.toggleBtn:focus {
+	outline: 0;
+	background: #fff;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.toggleBtnIcon{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-top: .4rem;
+	font-size: 4.1rem;
+}

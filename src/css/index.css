@@ -1,0 +1,24 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html{
+	height: 100%;
+	font: 16px sans-serif;
+	font-size: 62.5%; /* 10px */
+	background: #E0E0E0;
+	/* Gestion de la scrollbar */
+	overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root{
+	background: #E0E0E0;
+	font-family: 'Verdana';
+}

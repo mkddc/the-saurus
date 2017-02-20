@@ -1,0 +1,11 @@
+.errMsg{
+	padding-top: 3rem;
+	text-align: center;
+	font-size: 2.5rem;
+	width: 90%;
+	background: #E0E0E0;
+	color: #D50000;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%,0);
+}

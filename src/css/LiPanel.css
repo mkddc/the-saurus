@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+.block{
+	overflow: hidden;
+	margin-bottom: 1rem;
+	padding-bottom: 0.25rem;
+	color: #3B3E41;
+}
+	.panel {
+		margin: 0;
+		padding: 0;
+		background: #CFD8DC;
+    	animation: translat 400ms;
+		transform: translateY(0%);
+		box-shadow: inset 0 0 0.4em #000;
+	}
+	.panelClosed {
+    	display: none;
+	}
+
+	@keyframes translat{
+	    0% {
+	        transform: translateY(-100%);
+	    }
+
+	    100% {
+	        transform: translateY(0%);
+	    }
+	}	
+	.wordKey{
+		position: relative;
+		overflow: hidden;
+		z-index: 2;
+		margin: 0;
+		padding-left: 4rem;
+		font-family: 'Lato', sans-serif;
+		font-size: 4rem;
+		line-height: 5.4rem;
+		border: 1px solid #e3e3e3;
+		background: #fff;
+	}
+		.typeSpan{
+			font-size: 1.7rem;
+		}
+		.toggleBtn{
+			float: right;
+		}
+
+	.title{
+		padding: 0;
+		margin: 0;
+		font-family: 'Comic Sans MS';
+		font-size: 2rem;
+		text-align: center;
+		color: #375C71;
+	}
+
+	.title p{
+		padding:0;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+		border: 1px solid #607D8B;
+		border-radius: 0.2rem;
+		box-shadow: 0 0 0.2em #000;
+	}
+
+
+	.meanBlock{
+		width: 99%;
+		border-radius: 0.5rem;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+	.meanBlockList{
+		padding: 0;
+	}
+	.meanBlockUl{
+		padding: 1.4rem;
+		list-style-type: none;
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+		border: 1px solid #607D8B;
+		border-radius: 0.2rem;
+		background: #90CAF9;
+		box-shadow: 0 0 0.2em #000;
+	}
+	.meanTitle{
+		background: #90CAF9;
+		background: #42A5F5;
+	}
+
+	.synBlock{
+		width: 99%;
+		margin-bottom: 1rem;
+	}
+
+	.synTitle{
+		background: #A5D6A7;
+		background: #66BB6A;
+	}
+	.synList{
+		padding: 0;
+	}
+	.synListDiv{
+		padding: 1.4rem;
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+		border: 1px solid #607D8B;
+		border-radius: 0.2rem;
+		background: #A5D6A7;
+		text-align: justify;
+		box-shadow: 0 0 0.2em #000;
+	}
+	.antoBlock{
+		width: 99%;
+		margin-bottom: 1rem;
+	}
+
+	.antoTitle {
+		background: #F8BBD0;
+		background: #F06292;
+	}
+	.antoList{
+		padding: 0;
+	}
+	.antoListDiv{
+		padding: 1.4rem;
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+		border: 1px solid #607D8B;
+		border-radius: 0.2rem;
+		background: #F8BBD0;
+		text-align: justify;
+		box-shadow: 0 0 0.2em #000;
+	}
+
+@media screen and (max-width: 767px) {
+	.wordKey{
+		font-size: 2rem;
+	}
+		.typeSpan{
+			font-size: 1.2rem;
+		}
+}

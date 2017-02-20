@@ -1,0 +1,14 @@
+.wordOn {
+	width: 100%;
+	text-align: center;
+	color: #EF5350;
+}
+
+.wordOff {
+	display: none;
+}
+
+.randomWord {
+	font-weight: bold;
+	color: #424242;
+}

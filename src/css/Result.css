@@ -1,0 +1,14 @@
+.bigListContainer{
+	width: 100%;
+}
+
+.bigList{
+	list-style-type: none;
+	margin: 0;
+	margin-bottom: 8rem;
+	margin-top: 3rem;
+	margin-left: 5%;
+	margin-right: 5%;
+	padding: 0;
+	width: 90%;
+}
