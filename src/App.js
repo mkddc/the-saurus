@@ -53,7 +53,8 @@ class App extends Component {
 			if (nbTypes === 0) {
 				that.setState({
 					definition: [],
-					error: true
+					error: true,
+					wordInput : ''
 				})
 			}
 			// Le mot a été trouvé :
@@ -205,7 +206,9 @@ class App extends Component {
 	            		wordSearched={ this.state.wordSearched }
 	            		wordInputFull={ this.state.wordInput }
 	            		/>
-	           	<Footer inputValue={ this.state.wordInput }/>
+	           	<Footer inputValue={ this.state.wordInput }
+						error={ this.state.error } 
+	           	/>
             </div>
         );
     }
