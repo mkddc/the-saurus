@@ -9,7 +9,7 @@ export class RandomTitle extends Component {
 		};
 	}
 	componentWillReceiveProps(nextProps){
-		if (nextProps.wordInputFull !== this.props.wordInputFull) {
+		if (nextProps.wordInputFull !== this.props.wordInputFull || nextProps.error === true ) {
 			this.setState({
 				randomTitleClass: "wordOff"
 			});

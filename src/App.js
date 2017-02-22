@@ -195,7 +195,8 @@ class App extends Component {
 	            		suggestion={ this.state.suggestions }
 	            		inputValue={ this.state.wordInput }
 	            />
-	            <RandomTitle wordInputFull={ this.state.wordInput } />
+	            <RandomTitle 	wordInputFull={ this.state.wordInput } 
+	            				error={ this.state.error } />
 	            <Result 
 	            		definition={ this.state.definition } 
 	            		synonyms={ this.state.synonyms } 
