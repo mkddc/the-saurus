@@ -178,7 +178,7 @@ class App extends Component {
 
 	}
 	searchClicked(str){
-		var url = "http://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + str + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
+		var url = "https://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + str + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
 		this.checkForMatch(url, str);
 	}
 	setNewValue(){
