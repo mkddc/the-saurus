@@ -29,144 +29,113 @@ class App extends Component {
 
 		this.checkForMatch(urlDef, this.state.wordInput);
 	}
-	createCORSRequest(method, url) {
-	  var xhr = new XMLHttpRequest();
-	  if ("withCredentials" in xhr) {
-
-	    // Check if the XMLHttpRequest object has a "withCredentials" property.
-	    // "withCredentials" only exists on XMLHTTPRequest2 objects.
-	    xhr.open(method, url, true);
-
-	  } else if (typeof XDomainRequest !== "undefined") {
-
-	    // Otherwise, check if XDomainRequest.
-	    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-	    xhr = new XDomainRequest();
-	    xhr.open(method, url);
-
-	  } else {
-
-	    // Otherwise, CORS is not supported by the browser.
-	    xhr = null;
-
-	  }
-	  return xhr;
-	}	
 	checkForMatch(urlDef, searchRequestFull){
 		// Requête sur le dictionnaire des synonymes :
-
-		// var reqDef = new XMLHttpRequest();
-		var reqDef = this.createCORSRequest('GET', urlDef);
-		if (!reqDef) {
-		  throw new Error('CORS not supported');
-		}		
-
-		reqDef.overrideMimeType('text/xml');
-		reqDef.open('GET', urlDef, true); // Si true : asynchrone
-		reqDef.send(null);
-		
-		var dataXML = "";
-
-		// Définition de la fonction de callback à exécuter 
-		// lorsque le serveur renvoie les données :
 		var that = this;
-		reqDef.onreadystatechange = function() {
-			if (reqDef.readyState === 4) {
+		fetch(urlDef)
+		.then(function(response) {
+			if (response.status >= 400) {
+				console.log('response.status :');
+				console.log(response);
+				throw new Error("Bad response from server");
+			}
+			return response.text();
+		})
+		.then(function (str) {
+			var parser = new DOMParser();
+			var data = parser.parseFromString(str, "text/xml");
+			return data;
+		})
+		.then(function(dataXML) {
+			console.log(dataXML);
+			var nbTypes = dataXML.getElementsByTagName("entry").length;
+			// Pas de résultat de recherche dans le dictionnaire :
+			if (nbTypes === 0) {
+				that.setState({
+					definition: [],
+					error: true
+				})
+			}
+			// Le mot a été trouvé :
+			else
+			{
+				// Récupération, par types d'entrées, du nombre de définitions disponibles :
+				var defs = [];
 
-				dataXML = reqDef.responseXML;
+				for (var i = 0; i < nbTypes; i++) {
+					// Mot exact correpondant à la définition
+					var entry = dataXML.getElementsByTagName("entry")[i].id;
 
-				// Nb de type d'entrées pour le mot :
-				var nbTypes = dataXML.getElementsByTagName("entry").length;
+					// On remplace les balises de caractères spéciaux
+					entry = that.handleSpecialChar(entry);
 
-				// Pas de résultat de recherche dans le dictionnaire :
-				if (nbTypes === 0) {
-					that.setState({
-						definition: [],
-						error: true
-					})
-				}
-				// Le mot a été trouvé :
-				else
-				{
-					// Récupération, par types d'entrées, du nombre de définitions disponibles :
-					var defs = [];
+					// type de mot (adj, nom, etc...)
+					var entryType = "";
+					if (dataXML.getElementsByTagName("entry")[i].getElementsByTagName("fl").length !== 0) {
+						entryType = dataXML
+						.getElementsByTagName("entry")[i]
+						.getElementsByTagName("fl")[0].innerHTML;
+					}
+					// Pour un type d'entrée d'un mot, constitution du tableau
+					// de ses sous-définitions, synonymes et antonymes :
+					var miniDefs = [];
+					var miniSyns = "";
+					var miniAntos = "";
 
-					for (var i = 0; i < nbTypes; i++) {
-						// Mot exact correpondant à la définition
-						var entry = dataXML.getElementsByTagName("entry")[i].id;
+					var miniDefsLength = dataXML.getElementsByTagName("entry")[i]
+					.getElementsByTagName("sens").length;
 
-						// On remplace les balises de caractères spéciaux
-						entry = that.handleSpecialChar(entry);
+					// Récupération des définitions, synonymes et antonymes pour cette entry :
+					// Remplissage des tableau :
+					for (var j = 0; j < miniDefsLength; j++) {
+						
+						var arrKey = "";
+						
+						miniDefs[j] = dataXML
+						.getElementsByTagName("entry")[i]
+						.getElementsByTagName("sens")[j]
+						.getElementsByTagName("mc")[0].textContent;
 
-						// type de mot (adj, nom, etc...)
-						var entryType = "";
-						if (dataXML.getElementsByTagName("entry")[i].getElementsByTagName("fl").length !== 0) {
-							entryType = dataXML
-							.getElementsByTagName("entry")[i]
-							.getElementsByTagName("fl")[0].innerHTML;
-						}
-
-						// Pour un type d'entrée d'un mot, constitution du tableau
-						// de ses sous-définitions, synonymes et antonymes :
-						var miniDefs = [];
-						var miniSyns = "";
-						var miniAntos = "";
-
-						var miniDefsLength = dataXML.getElementsByTagName("entry")[i]
-						.getElementsByTagName("sens").length;
-
-						// Récupération des définitions, synonymes et antonymes pour cette entry :
-						// Remplissage des tableau :
-						for (var j = 0; j < miniDefsLength; j++) {
-							
-							var arrKey = "";
-							
-							miniDefs[j] = dataXML
+						if(dataXML.getElementsByTagName("entry")[i].getElementsByTagName("sens")[j].getElementsByTagName("syn").length !== 0)
+						{
+							miniSyns = dataXML
 							.getElementsByTagName("entry")[i]
 							.getElementsByTagName("sens")[j]
-							.getElementsByTagName("mc")[0].textContent;
-
-							if(dataXML.getElementsByTagName("entry")[i].getElementsByTagName("sens")[j].getElementsByTagName("syn").length !== 0)
-							{
-								miniSyns = dataXML
-								.getElementsByTagName("entry")[i]
-								.getElementsByTagName("sens")[j]
-								.getElementsByTagName("syn")[0].textContent;
-							}
-							if(dataXML.getElementsByTagName("entry")[i].getElementsByTagName("sens")[j].getElementsByTagName("ant").length !== 0)
-							{
-								miniAntos = dataXML
-								.getElementsByTagName("entry")[i]
-								.getElementsByTagName("sens")[j]
-								.getElementsByTagName("ant")[0].textContent;
-							}
+							.getElementsByTagName("syn")[0].textContent;
 						}
-
-						// Si le type d'entrée n'est pas spécifié, on ne met pas de ()
-						// dans le titre :
-						if (entryType !== "") {
-							arrKey = i + 1 + " - " + entry + " (" + entryType + ")";
+						if(dataXML.getElementsByTagName("entry")[i].getElementsByTagName("sens")[j].getElementsByTagName("ant").length !== 0)
+						{
+							miniAntos = dataXML
+							.getElementsByTagName("entry")[i]
+							.getElementsByTagName("sens")[j]
+							.getElementsByTagName("ant")[0].textContent;
 						}
-						else {
-							arrKey = entry;
-						}
-						// On range les synonymes et antonymes avec les définitions 
-						// afférentes à la clé considérée
-						defs[arrKey] = [miniDefs, miniSyns, miniAntos, entry, entryType]; 
 					}
 
-					that.setState({
-						wordSearched: dataXML.getElementsByTagName("entry")[0]
-							.getElementsByTagName("term")[0]
-							.textContent,
-						definition: defs,
-						error: false,
-						// test de faisabilité
-						wordInput: searchRequestFull
-					});
+					// Si le type d'entrée n'est pas spécifié, on ne met pas de ()
+					// dans le titre :
+					if (entryType !== "") {
+						arrKey = i + 1 + " - " + entry + " (" + entryType + ")";
+					}
+					else {
+						arrKey = entry;
+					}
+					// On range les synonymes et antonymes avec les définitions 
+					// afférentes à la clé considérée
+					defs[arrKey] = [miniDefs, miniSyns, miniAntos, entry, entryType]; 
 				}
+
+				that.setState({
+					wordSearched: dataXML.getElementsByTagName("entry")[0]
+						.getElementsByTagName("term")[0]
+						.textContent,
+					definition: defs,
+					error: false,
+					// test de faisabilité
+					wordInput: searchRequestFull
+				});
 			}
-		};
+		})
 	}
 	handleSpecialChar(word){
 		word = word.replace(/{aacute}/g, "à");
