@@ -25,13 +25,17 @@ class App extends Component {
 		// Choix d'un mot au hasard, en arrivant sur la page :
 		// var randomWord = wordListArray[Math.floor(Math.random() * wordListArray.length)];
 
-		var urlDef = "https://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + this.state.wordInput + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
+		// Utilisation de cors-anywhere pour pouvoir faire des cross origin request :
+		// On prefixe notre url par https://cors-anywhere.herokuapp.com/
+		
+		var urlDef = "https://cors-anywhere.herokuapp.com/https://www.dictionaryapi.com/api/v1/references/thesaurus/xml/" + this.state.wordInput + "?key=5110be35-8164-47d6-a89d-3d88dcaa2932";
 
 		this.checkForMatch(urlDef, this.state.wordInput);
 	}
 	checkForMatch(urlDef, searchRequestFull){
 		// Requête sur le dictionnaire des synonymes :
 		var that = this;
+
 		fetch(urlDef)
 		.then(function(response) {
 			if (response.status >= 400) {
